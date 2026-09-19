@@ -46,9 +46,7 @@ export async function logout() {
 
         return response.data
 
-    } catch (err) {
-
-    }
+    } catch (err) { console.log(err) }
 }
 
 export async function getMe() {

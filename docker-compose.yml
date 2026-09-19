@@ -1,0 +1,38 @@
+# Local stack: Nginx (frontend) -> Express (backend) -> MongoDB
+# Run from the repo root:  docker compose up -d --build
+
+services:
+  mongo:
+    image: mongo:8
+    volumes:
+      - mongo-data:/data/db
+    restart: unless-stopped
+
+  backend:
+    build: ./Backend
+    image: interview-ai-backend:local
+    init: true
+    env_file: ./Backend/.env
+    environment:
+      # These override the same keys from .env for the Docker setup
+      PORT: "3000"
+      CLIENT_URL: http://localhost
+      MONGO_URI: mongodb://mongo:27017/interview-ai
+    depends_on:
+      - mongo
+    restart: unless-stopped
+
+  frontend:
+    build:
+      context: ./Frontend
+      args:
+        VITE_API_URL: ""
+    image: interview-ai-frontend:local
+    ports:
+      - "80:80"
+    depends_on:
+      - backend
+    restart: unless-stopped
+
+volumes:
+  mongo-data:
