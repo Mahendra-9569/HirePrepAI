@@ -1,0 +1,17 @@
+Frontend/node_modules
+Backend/node_modules
+
+Frontend/.env
+Frontend/.env.*
+Backend/.env
+Backend/.env.*
+
+**/node_modules
+**/.env
+**/.env.*
+
+.git
+.gitignore
+Dockerfile
+.dockerignore
+npm-debug.log*
